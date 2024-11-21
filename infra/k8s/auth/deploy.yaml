@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: auth
+  name: auth-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - image: arturops/ticket-app-auth
+        name: ticket-app-auth
+        imagePullPolicy: "Never"
+        ports:
+        - containerPort: 3000
+        resources: {}
+status: {}
