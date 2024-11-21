@@ -3,7 +3,7 @@ import { CustomError } from './custom-error';
 
 export class RequestValidationError extends CustomError {
   statusCode = 400;
-  constructor(public errors: ValidationError[]) {
+  constructor(private errors: ValidationError[]) {
     super('Invalid request'); //must call parent constructor
 
     // because we are extending from a child from the built in class Error
