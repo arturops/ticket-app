@@ -18,4 +18,6 @@ manifests:
   rawYaml:
     - infra/k8s/auth/deploy.yaml
     - infra/k8s/auth/svc.yaml
+    - infra/k8s/auth/mongo-deploy.yaml
+    - infra/k8s/auth/mongo-svc.yaml
     - infra/k8s/ingress.yaml
