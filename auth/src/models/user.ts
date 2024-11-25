@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Password } from '../utils/password';
 
 // Interface that describes the properties of a User
 // This is a Schema
@@ -30,6 +31,18 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+// hash the password before storing data in db
+// Use the mongoose `.pre()` hook
+userSchema.pre('save', async function (done) {
+  if (this.isModified('password')) {
+    const hashedPassword = await Password.toHash(this.get('password'));
+    this.set('password', hashedPassword);
+  }
+
+  done();
+});
+
 // method to build a new User(), helps
 // validate types and args when creating a user
 userSchema.statics.build = (attrs: UserAttrs) => {
