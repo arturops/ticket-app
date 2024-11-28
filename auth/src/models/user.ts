@@ -34,12 +34,18 @@ const userSchema = new mongoose.Schema({
 
 // hash the password before storing data in db
 // Use the mongoose `.pre()` hook
+//
+// using `async function () {}` is to access to the func local doc by using `this`
+// if we use arrow function `async () => {}` we have the whole file `this`
+// AKA function() for local `this` context, and async () =>{} for global file context
 userSchema.pre('save', async function (done) {
+  // isModified is True for updates and first time creation
   if (this.isModified('password')) {
     const hashedPassword = await Password.toHash(this.get('password'));
     this.set('password', hashedPassword);
   }
 
+  // must call done() to indicate we have finished running all desired code
   done();
 });
 
