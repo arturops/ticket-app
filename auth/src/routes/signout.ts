@@ -6,8 +6,10 @@ const router = express.Router();
 const route = svcUrl.concat('/signout');
 
 router.post(route, (req, res) => {
-  console.log("signout works");
-  res.send("Hi new user!!");
+  // to empty a session and destroy it
+  req.session = null;
+  console.log('Signout');
+  res.send({});
 });
 
 export { router as signoutRouter };
