@@ -19,15 +19,8 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage('Password must be between 4 to 20 characters'),
   ],
+  validateRequest,
   async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-      // send array of json objects describing each error if > 1
-      //res.status(400).send(errors.array());
-      //return
-    }
-
     const { email, password }: { email: string; password: string } = req.body;
     const existingUser = await User.findOne({ email });
 
@@ -41,13 +34,12 @@ router.post(
     await newUser.save();
 
     // Generate JWT
-    const secretSigningKey = 'asdf';
     const userJwt = jwt.sign(
       {
         id: newUser.id,
         email: newUser.email,
       },
-      secretSigningKey
+      jwtSigningKey
     );
     // add jwt to header
     req.session = {
