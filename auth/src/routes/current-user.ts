@@ -1,24 +1,14 @@
 import express from 'express';
-import { jwtSigningKey, svcUrl } from '../config';
-import jwt from 'jsonwebtoken';
+import { svcUrl } from '../config';
+import { currentUserMiddleware } from '../middlewares/current-user';
 
 const router = express.Router();
 
 const route = svcUrl.concat('/currentuser');
 
-router.get(route, (req, res) => {
-  if (!req.session?.jwt) {
-    res.send({ currentUser: null });
-    return;
-  }
-
-  try {
-    const payload = jwt.verify(req.session.jwt, jwtSigningKey);
-    res.send({ currentUser: payload });
-  } catch (err) {
-    console.log('Session expired');
-    res.send({ currentUser: null });
-  }
+router.get(route, currentUserMiddleware, (req, res) => {
+  // need `|| null` to avoid sending 'undefined'
+  res.send({ currentUser: req.currentUser || null });
 });
 
 export { router as currentUserRouter };
