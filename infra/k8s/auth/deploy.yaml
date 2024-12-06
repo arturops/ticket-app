@@ -16,10 +16,16 @@ spec:
         app: auth
     spec:
       containers:
-      - image: arturops/ticket-app-auth
-        name: ticket-app-auth
-        imagePullPolicy: "Never"
-        ports:
-        - containerPort: 3000
-        resources: {}
+        - image: arturops/ticket-app-auth
+          name: ticket-app-auth
+          imagePullPolicy: 'Never'
+          ports:
+            - containerPort: 3000
+          resources: {}
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-env
+                  key: JWT_KEY
 status: {}
