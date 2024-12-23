@@ -19,7 +19,6 @@ it('clears the cookie after signing out', async () => {
 
   // check cookie session is null
   const cookie = respSignOut.get('Set-Cookie');
-  console.log(cookie);
   if (!cookie) {
     throw new Error('Undefined cookie');
   }
@@ -28,5 +27,5 @@ it('clears the cookie after signing out', async () => {
   const expectedCookieVal = [
     'session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly',
   ];
-  expect(cookie[0] === expectedCookieVal[0]);
+  expect(cookie[0]).toEqual(expectedCookieVal[0]);
 });
