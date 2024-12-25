@@ -14,6 +14,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: arturops/ticket-app-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
 manifests:
   rawYaml:
     - infra/k8s/auth/deploy.yaml
@@ -21,3 +29,5 @@ manifests:
     - infra/k8s/auth/mongo-deploy.yaml
     - infra/k8s/auth/mongo-svc.yaml
     - infra/k8s/ingress.yaml
+    - infra/k8s/client/deploy.yaml
+    - infra/k8s/client/svc.yaml
