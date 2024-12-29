@@ -21,7 +21,11 @@ spec:
           imagePullPolicy: 'Never'
           ports:
             - containerPort: 3000
-          resources: {}
+          resources:
+            limits:
+              # image alone is 325 megabytes
+              memory: '700M'
+              cpu: '500m'
           env:
             - name: JWT_KEY
               valueFrom:

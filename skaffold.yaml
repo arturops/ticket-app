@@ -28,6 +28,6 @@ manifests:
     - infra/k8s/auth/svc.yaml
     - infra/k8s/auth/mongo-deploy.yaml
     - infra/k8s/auth/mongo-svc.yaml
-    - infra/k8s/ingress.yaml
     - infra/k8s/client/deploy.yaml
     - infra/k8s/client/svc.yaml
+    - infra/k8s/ingress.yaml
