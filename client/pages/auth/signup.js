@@ -1,28 +1,45 @@
 import { useState } from 'react';
-import axios from 'axios';
+import useRequest from '../../hooks/use-request';
 
 export default () => {
+  const url = '/api/v0/users/signup';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  let [errors, setErrors] = useState([]);
+  const { doRequest, errors } = useRequest({
+    url: url,
+    method: 'post',
+    body: {
+      email,
+      password,
+    },
+  });
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const resp = await axios.post('/api/v0/users/signup', {
-        email: email,
-        password: password,
-      });
-    } catch (error) {
-      setErrors(error.response.data.errors);
-      console.log(error.response.data.errors);
-    }
+    doRequest();
   };
 
   function isFieldError(errors, field) {
+    if (errors === null) {
+      return null;
+    }
     const err = errors.some((e) => e.field === field);
-    console.log(err);
     return err;
+  }
+
+  function parseErrors(errors, field) {
+    if (isFieldError(errors, field)) {
+      return (
+        <div className="m-1 alert alert-danger" role="alert">
+          <ul>
+            {errors.map((e) =>
+              e.field === field ? <li key={e.message}>{e.message}</li> : null
+            )}
+          </ul>
+        </div>
+      );
+    }
+    return null;
   }
 
   return (
@@ -48,17 +65,7 @@ export default () => {
             required
           />
         </div>
-        {isFieldError(errors, 'email') && (
-          <div className="m-1 alert alert-danger" role="alert">
-            <ul>
-              {errors.map((e) =>
-                e.field === 'email' ? (
-                  <li key={e.message}>{e.message}</li>
-                ) : null
-              )}
-            </ul>
-          </div>
-        )}
+        {parseErrors(errors, 'email')}
       </div>
       <div className="m-2 form-group">
         <label for="user-password" className="form-label">
@@ -96,17 +103,7 @@ export default () => {
             <li>Must NOT contain spaces, special characters, or emoji</li>
           </ul>
         </div>
-        {isFieldError(errors, 'password') && (
-          <div className="m-1 alert alert-danger" role="alert">
-            <ul>
-              {errors.map((e) =>
-                e.field === 'password' ? (
-                  <li key={e.message}>{e.message}</li>
-                ) : null
-              )}
-            </ul>
-          </div>
-        )}
+        {parseErrors(errors, 'password')}
       </div>
       <button className="m-2 btn btn-primary">Join Ticketxing!</button>
     </form>
