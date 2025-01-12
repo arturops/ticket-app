@@ -15,7 +15,7 @@ spec:
               service:
                 name: auth-svc
                 port:
-                  number: 3000
+                  number: 3005
             path: /api/v0/users/?(.*)
             pathType: ImplementationSpecific
           - backend:
