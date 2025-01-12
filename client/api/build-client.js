@@ -20,6 +20,6 @@ export default ({ req }) => {
     // we are on the browser!
     // request do not need special base url, simply
     // route
-    return axios.create({});
+    return axios.create({ baseURL: '/' });
   }
 };
