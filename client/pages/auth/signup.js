@@ -25,11 +25,31 @@ export default () => {
     if (errors === null) {
       return null;
     }
-    const err = errors.some((e) => e.field === field);
-    return err;
+    let err = {};
+    // to show errors without field, and put errors with field in
+    // the email or password fields
+    if (field === null) {
+      err = errors.some((e) => !('field' in e));
+      return err;
+    } else if (field) {
+      err = errors.some((e) => e.field === field);
+      return err;
+    }
+    return null;
   }
 
   function parseErrors(errors, field) {
+    if (field === null && isFieldError(errors, null)) {
+      return (
+        <div className="m-1 alert alert-danger" role="alert">
+          <ul>
+            {errors.map((e) =>
+              !('field' in e) ? <li key={e.message}>{e.message}</li> : null
+            )}
+          </ul>
+        </div>
+      );
+    }
     if (isFieldError(errors, field)) {
       return (
         <div className="m-1 alert alert-danger" role="alert">
@@ -107,6 +127,7 @@ export default () => {
         </div>
         {parseErrors(errors, 'password')}
       </div>
+      {parseErrors(errors, null)}
       <button className="m-2 btn btn-primary">Join Ticketxing!</button>
     </form>
   );
