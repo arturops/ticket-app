@@ -2,9 +2,8 @@ import express from 'express';
 import { Request, Response } from 'express';
 import { jwtSigningKey, svcUrl } from '../config';
 import { body } from 'express-validator';
-import { validateRequest } from '../middlewares/validate-request-handler';
+import { validateRequest, BadRequestError } from '@apstix/common';
 import { User } from '../models/user';
-import { BadRequestError } from '../errors/bad-request-error';
 import { Password } from '../utils/password';
 import jwt from 'jsonwebtoken';
 

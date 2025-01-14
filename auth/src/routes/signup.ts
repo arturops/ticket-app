@@ -2,9 +2,8 @@ import express, { Request, Response } from 'express';
 import { svcUrl, jwtSigningKey } from '../config';
 import { body } from 'express-validator';
 import { User } from '../models/user';
-import { BadRequestError } from '../errors/bad-request-error';
+import { BadRequestError, validateRequest } from '@apstix/common';
 import jwt from 'jsonwebtoken';
-import { validateRequest } from '../middlewares/validate-request-handler';
 
 const router = express.Router();
 

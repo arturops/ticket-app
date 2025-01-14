@@ -1,6 +1,6 @@
 import express from 'express';
 import { svcUrl } from '../config';
-import { currentUserMiddleware } from '../middlewares/current-user';
+import { currentUserMiddleware } from '@apstix/common';
 
 const router = express.Router();
 
