@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tickets-mongo
+  name: tickets-mongo-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets-mongo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: tickets-mongo
+    spec:
+      containers:
+        - image: mongo
+          name: tickets-mongo
+          ports:
+            - containerPort: 27017
+          resources:
+            limits:
+              memory: '1000M'
+              cpu: '500m'
+status: {}
