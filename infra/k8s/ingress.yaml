@@ -20,6 +20,13 @@ spec:
             pathType: ImplementationSpecific
           - backend:
               service:
+                name: tickets-svc
+                port:
+                  number: 3006
+            path: /api/v0/tickets/?(.*)
+            pathType: ImplementationSpecific
+          - backend:
+              service:
                 name: client-svc
                 port:
                   number: 3000
