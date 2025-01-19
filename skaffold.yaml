@@ -22,6 +22,14 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: arturops/ticket-app-tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
 manifests:
   rawYaml:
     - infra/k8s/auth/deploy.yaml
@@ -30,4 +38,8 @@ manifests:
     - infra/k8s/auth/mongo-svc.yaml
     - infra/k8s/client/deploy.yaml
     - infra/k8s/client/svc.yaml
+    - infra/k8s/tickets/deploy.yaml
+    - infra/k8s/tickets/svc.yaml
+    - infra/k8s/tickets/mongo-deploy.yaml
+    - infra/k8s/tickets/mongo-svc.yaml
     - infra/k8s/ingress.yaml
