@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tickets
+  name: tickets-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: tickets
+    spec:
+      containers:
+        - image: arturops/ticket-app-tickets
+          name: ticket-app-tickets
+          ports:
+            - containerPort: 3006
+          resources:
+            limits:
+              memory: '700M'
+              cpu: '500m'
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-env
+                  key: JWT_KEY
+status: {}
