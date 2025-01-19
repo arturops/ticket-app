@@ -32,4 +32,6 @@ spec:
                 secretKeyRef:
                   name: secret-env
                   key: JWT_KEY
+            - name: MONGO_URI
+              value: 'mongodb://auth-mongo-svc:27017/auth'
 status: {}

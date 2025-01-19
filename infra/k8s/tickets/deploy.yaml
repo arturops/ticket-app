@@ -30,4 +30,6 @@ spec:
                 secretKeyRef:
                   name: secret-env
                   key: JWT_KEY
+            - name: MONGO_URI
+              value: 'mongodb://tickets-mongo-svc:27017/tickets'
 status: {}
